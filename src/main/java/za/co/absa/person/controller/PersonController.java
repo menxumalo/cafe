@@ -1,6 +1,8 @@
 package za.co.absa.person.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,8 +19,14 @@ import java.util.Collection;
 public class PersonController {
     @Autowired
     private PersonService personService;
+    @Value("${api_man_username}")
+    private String username;
+    @Autowired
+    private Environment env;
     @GetMapping
     public Collection<Person> getAllPersons() {
+        System.out.println("username is " + username);
+        System.out.println("username from environment is " + env.getProperty("api_man_username"));
         return personService.retrieveAllPersons();
     }
 
